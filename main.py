@@ -21,7 +21,7 @@ if __name__ == '__main__':
     FILES_DESTINATION = set_files_destination()
     path = environ.get('FOLDER_TO_ORGANIZE')
 
-    if environ.get('IS_TESTING'):
+    if environ.get('IS_TESTING') == '1':
         path = environ.get('FOLDER_TO_ORGANIZE_TEST')
         files_factory(path, FILES_DESTINATION)
 
