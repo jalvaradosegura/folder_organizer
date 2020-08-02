@@ -23,7 +23,7 @@ class SystemHandler():
         return [f for f in listdir(self.path) if isfile(join(self.path, f))]
 
     def get_folders(self):
-        return [v for k, v in environ.items() if k.startswith('FOLDER_FOR')]
+        return [v for k, v in environ.items() if k.startswith('FOLDER_FOR_')]
 
     def create_folders(self):
         folders = self.get_folders()
