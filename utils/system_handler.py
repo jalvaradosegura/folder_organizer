@@ -1,3 +1,4 @@
+from datetime import datetime
 from os import (
     listdir,
     environ,
@@ -31,6 +32,20 @@ class SystemHandler():
             if not isdir(full_path_to_folder):
                 mkdir(full_path_to_folder)
 
+    def create_file(self, source, destination):
+        if isfile(destination):
+            full_filename = destination.split('/')[-1]
+            filename, extension = splitext(full_filename)
+
+            current_time = datetime.now().strftime('%Y%m%d_%H_%M_%S')
+            new_full_filename = f'{filename}_copy_{current_time}{extension}'
+
+            destination = join(
+                '/'.join(destination.split('/')[:-1]),
+                new_full_filename
+            )
+        rename(source, destination)
+
     def organize(self):
         files_to_organize = self.get_files()
         for full_filename in files_to_organize:
@@ -53,4 +68,4 @@ class SystemHandler():
                     environ.get('FOLDER_FOR_OTHERS'),
                     full_filename
                 )
-            rename(source, destination)
+            self.create_file(source, destination)
