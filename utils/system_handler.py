@@ -41,7 +41,7 @@ class SystemHandler():
             full_filename = destination.split('/')[-1]
             filename, extension = splitext(full_filename)
 
-            current_time = datetime.now().strftime('%Y%m%d_%H_%M_%S')
+            current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
             new_full_filename = f'{filename}_copy_{current_time}{extension}'
 
             destination = join(
@@ -49,7 +49,7 @@ class SystemHandler():
                 new_full_filename
             )
 
-        if source != self.logger.file_to_write_in:
+        if source != self.logger.get_file_to_write_in():
             self.logger.write_to_log_file(f'Move {source} to {destination}')
             rename(source, destination)
 
@@ -77,6 +77,9 @@ class SystemHandler():
     def organize(self):
         files_to_organize = self.get_files()
         for full_filename in files_to_organize:
+            if (environ.get('IGNORE_HIDDEN_FILES') == '1'
+                    and full_filename.startswith('.')):
+                continue
             source = join(self.path, full_filename)
             destination = self.organize_by_extension(full_filename)
             self.move_file(source, destination)
