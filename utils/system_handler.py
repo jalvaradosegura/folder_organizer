@@ -12,8 +12,12 @@ from os.path import (
     splitext
 )
 
+from .logger import log
+
 
 class SystemHandler():
+
+    logger = log
 
     def __init__(self, path, handler):
         self.path = path
@@ -32,7 +36,7 @@ class SystemHandler():
             if not isdir(full_path_to_folder):
                 mkdir(full_path_to_folder)
 
-    def create_file(self, source, destination):
+    def move_file(self, source, destination):
         if isfile(destination):
             full_filename = destination.split('/')[-1]
             filename, extension = splitext(full_filename)
@@ -44,7 +48,10 @@ class SystemHandler():
                 '/'.join(destination.split('/')[:-1]),
                 new_full_filename
             )
-        rename(source, destination)
+
+        if source != self.logger.file_to_write_in:
+            self.logger.write_to_log_file(f'Move {source} to {destination}')
+            rename(source, destination)
 
     def organize(self):
         files_to_organize = self.get_files()
@@ -68,4 +75,4 @@ class SystemHandler():
                     environ.get('FOLDER_FOR_OTHERS'),
                     full_filename
                 )
-            self.create_file(source, destination)
+            self.move_file(source, destination)
