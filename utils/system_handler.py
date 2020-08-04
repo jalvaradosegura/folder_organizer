@@ -53,26 +53,30 @@ class SystemHandler():
             self.logger.write_to_log_file(f'Move {source} to {destination}')
             rename(source, destination)
 
+    def organize_by_extension(self, full_filename):
+        destination = None
+
+        filename, extension = splitext(full_filename)
+
+        for key, value in self.handler.items():
+            if extension.lower() in value:
+                destination = join(
+                    self.path,
+                    key,
+                    full_filename
+                )
+                break
+        if destination is None:
+            destination = join(
+                self.path,
+                environ.get('FOLDER_FOR_OTHERS'),
+                full_filename
+            )
+        return destination
+
     def organize(self):
         files_to_organize = self.get_files()
         for full_filename in files_to_organize:
             source = join(self.path, full_filename)
-            destination = None
-
-            filename, extension = splitext(full_filename)
-
-            for key, value in self.handler.items():
-                if extension.lower() in value:
-                    destination = join(
-                        self.path,
-                        key,
-                        full_filename
-                    )
-                    break
-            if destination is None:
-                destination = join(
-                    self.path,
-                    environ.get('FOLDER_FOR_OTHERS'),
-                    full_filename
-                )
+            destination = self.organize_by_extension(full_filename)
             self.move_file(source, destination)
