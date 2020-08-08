@@ -15,13 +15,13 @@ from os.path import (
 from .logger import log
 
 
-class SystemHandler():
+class SystemHandler:
 
     logger = log
 
-    def __init__(self, path, handler):
+    def __init__(self, path, files_handler):
         self.path = path
-        self.handler = handler
+        self.files_handler = files_handler
 
     def get_files(self):
         return [f for f in listdir(self.path) if isfile(join(self.path, f))]
@@ -58,7 +58,7 @@ class SystemHandler():
 
         filename, extension = splitext(full_filename)
 
-        for key, value in self.handler.items():
+        for key, value in self.files_handler.items():
             if extension.lower() in value:
                 destination = join(
                     self.path,

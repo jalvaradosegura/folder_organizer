@@ -1,56 +1,75 @@
 import unittest
 from pathlib import Path
-from os.path import join
+from os.path import (
+    join,
+    isdir
+)
 from os import (
     environ,
-    remove
+    remove,
+    rmdir
 )
 
 from utils.environment_variables import (
     set_environment_variables,
     set_files_destination
 )
+from utils.system_handler import SystemHandler
+
+BASE_DIR = Path(__file__).parent.absolute()
 
 
-class TestEnvironmentVariablesModule(unittest.TestCase):
+class TestApp(unittest.TestCase):
 
-    test_base_dir = None
     test_environment_file_name = '.test_env_file'
 
     @classmethod
     def setUpClass(cls):
-        cls.test_base_dir = Path(__file__).parent.absolute()
-        cls.create_test_environment_file(cls, cls.test_base_dir)
+        cls.create_test_environment_file(cls, BASE_DIR)
+        set_environment_variables(
+            join(
+                BASE_DIR,
+                cls.test_environment_file_name
+            )
+        )
+        cls.files_handler = set_files_destination()
+        cls.system_handler = SystemHandler(BASE_DIR, cls.files_handler)
 
     def create_test_environment_file(self, path):
         with open(join(path, self.test_environment_file_name), 'w') as f:
-            f.write(
-                'PROJECT=FOLDERS_ORGANIZER\nDUMMY_VAR=DUMMY\n'
-                'FOLDER_FOR_DUMMY=DUMMY_FOLDER\n'
-                'EXTENSIONS_FOR_DUMMY_FOLDER=.txt'
-            )
+            text_for_file = (f"FOLDER_TO_ORGANIZE={BASE_DIR}\n"
+                             "FOLDER_FOR_OTHERS=others\n"
+                             "FOLDER_FOR_IMAGES=images\n"
+                             "EXTENSIONS_FOR_IMAGES=.jpg,.png\n")
+            f.write(text_for_file)
 
     def test_set_environment_variables(self):
-        set_environment_variables(
-            join(
-                self.test_base_dir,
-                self.test_environment_file_name
-            )
-        )
-        project_name = environ.get('PROJECT')
-        dummy_var = environ.get('DUMMY_VAR')
-        dummy_folder = environ.get('FOLDER_FOR_DUMMY')
-        self.assertEqual(project_name, 'FOLDERS_ORGANIZER')
-        self.assertEqual(dummy_var, 'DUMMY')
-        self.assertEqual(dummy_folder, 'DUMMY_FOLDER')
+        folder_to_organize = environ.get('FOLDER_TO_ORGANIZE')
+        folder_for_others = environ.get('FOLDER_FOR_OTHERS')
+        self.assertEqual(folder_to_organize, str(BASE_DIR))
+        self.assertEqual(folder_for_others, 'others')
 
     def test_set_files_destination(self):
-        files_destination = set_files_destination()
-        self.assertEqual(files_destination['DUMMY_FOLDER'], ['.txt'])
+        self.assertEqual(self.files_handler['images'], ['.jpg', '.png'])
+
+    def test_get_folders(self):
+        folders = self.system_handler.get_folders()
+        self.assertEqual(folders, ['others', 'images'])
+
+    def test_get_files(self):
+        files = self.system_handler.get_files()
+        self.assertTrue(__file__ in files)
+
+    def test_create_folders(self):
+        self.system_handler.create_folders()
+        self.assertTrue(isdir(join(BASE_DIR, 'others')))
+        self.assertTrue(isdir(join(BASE_DIR, 'images')))
 
     @classmethod
     def tearDownClass(cls):
-        remove(join(cls.test_base_dir, cls.test_environment_file_name))
+        remove(join(BASE_DIR, cls.test_environment_file_name))
+        rmdir(join(BASE_DIR, 'others'))
+        rmdir(join(BASE_DIR, 'images'))
 
 
 if __name__ == '__main__':
