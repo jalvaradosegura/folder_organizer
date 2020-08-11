@@ -11,10 +11,10 @@ Automation to organize the files within a folder, moving them into custom folder
 Edit the config.py file within the docs folder. There are seven variables that must be set, the first six:
 
 ```py
-# Example:
+# Example values
 
 # If true, the script will organize the FOLDER_TO_ORGANIZE_TEST instead of FOLDER_TO_ORGANIZE.
-# The point of this is to look on a dummy folder how your current organization will looks likes.
+# The point of this is to look on a dummy folder how your current organization will look like.
 # So the system will create dummy files and organize them within the test folder
 IS_TESTING = True
 FOLDER_TO_ORGANIZE_TEST = '/Users/test_user/Downloads/test_folder'
@@ -39,7 +39,7 @@ This variable must be a dictionary, and its keys will be the name of the folder 
 For example:
 
 ```py
-# Example
+# Example values
 FILES_DESTINATION = {
     'images': ['.jpg', '.jpeg', '.png'],
     'documents': ['.pdf', '.xlsx', '.docx', '.txt'],
