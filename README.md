@@ -1,7 +1,7 @@
 # Folder Organizer 🗂
 Automation to organize the files within a folder, moving them into custom folders. Schedule the execution with crontab to take it to the next level
 
->Still working on this README file🛠
+>🛠 Still working on this README file
 
 ## Goals
 * Keep a folder cleaner
@@ -33,6 +33,8 @@ LOG_FILE = '/Users/test_user/Downloads/log.txt'
 IGNORE_HIDDEN_FILES = True
 ```
 
+>💡 File routes need to be the absolute path
+
 Currently, the only way of organization available is by file extension.
 You need to set the FILES_DESTINATION variable in order to tell the script how to organize your files.
 This variable must be a dictionary, and its keys will be the name of the folder and the values the extensions that will go into that folder.
@@ -50,6 +52,7 @@ FILES_DESTINATION = {
     'scripts': ['.py', '.rb', '.js', '.html'],
 }
 ```
+>💡 Yes, you have to add the extensions with the period
 
 Finally run the main.py to organize your desire folder
 
@@ -67,3 +70,5 @@ Add this line at the end of the file to execute the script every 30 minutes:
 */30 * * * * python3 /Users/test_user/Documents/folders_organizer/main.py
 ```
 Save it and you will have your desired folder organized most of the time 😁
+
+>💡 You have to grant system access to crontab in order for the script to work
