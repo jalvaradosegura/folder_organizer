@@ -1,30 +1,14 @@
-from os import environ
-from os.path import join
-from pathlib import Path
+from docs import config
+from organizer.system_handler import SystemHandler
+from organizer.files_factory import files_factory
 
-from utils.environment_variables import (
-    set_environment_variables,
-    set_files_destination
+folder_to_organize = config.FOLDER_TO_ORGANIZE
+files_destination = config.FILES_DESTINATION
+if config.IS_TESTING:
+    folder_to_organize = config.FOLDER_TO_ORGANIZE_TEST
+    files_factory(folder_to_organize, files_destination)
+handler = SystemHandler(
+    folder_to_organize=folder_to_organize,
+    files_handler=files_destination
 )
-from utils.system_handler import SystemHandler
-from utils.files_factory import files_factory
-
-
-if __name__ == '__main__':
-
-    PROJECT_BASE_DIR = Path(__file__).parent.absolute()
-    ENVIRONMENT_FILE = join(PROJECT_BASE_DIR, '.env')
-    set_environment_variables(
-        join(PROJECT_BASE_DIR, '.env')
-    )
-
-    FILES_DESTINATION = set_files_destination()
-    path = environ.get('FOLDER_TO_ORGANIZE')
-
-    if environ.get('IS_TESTING') == '1':
-        path = environ.get('FOLDER_TO_ORGANIZE_TEST')
-        files_factory(path, FILES_DESTINATION)
-
-    handler = SystemHandler(path, FILES_DESTINATION)
-    handler.create_folders()
-    handler.organize()
+handler.organize()
