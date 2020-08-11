@@ -1,6 +1,9 @@
 # Folder Organizer 🗂
 Automation to organize the files within a folder, moving them into custom folders. Schedule the execution with crontab to take it to the next level
 
+## Watch it in action
+![Example](https://media.giphy.com/media/Z9KPDEo1LetVfOyMru/giphy.gif)
+
 >🛠 Still working on this README file
 
 ## Goals
