@@ -13,7 +13,7 @@ Edit the config.py file within the docs folder. There are seven variables that m
 ```py
 # Example values
 
-# If true, the script will organize the FOLDER_TO_ORGANIZE_TEST instead of FOLDER_TO_ORGANIZE.
+# If IS_TESTING is true, the script will organize the FOLDER_TO_ORGANIZE_TEST instead of FOLDER_TO_ORGANIZE.
 # The point of this is to look on a dummy folder how your current organization will look like.
 # So the system will create dummy files and organize them within the test folder
 IS_TESTING = True
@@ -54,7 +54,7 @@ FILES_DESTINATION = {
 ```
 >💡 Yes, you have to add the extensions with the period
 
-Finally run the main.py to organize your desire folder
+Finally run the main.py to organize your desired folder
 
 ## Crontanb
 Add the execution of the main.py script to crontab, so your desired folder gets organized every so often.
