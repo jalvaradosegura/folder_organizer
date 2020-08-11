@@ -34,7 +34,7 @@ class SystemHandler:
 
     def move_file(self, file_to_move, destination):
         if os.path.isfile(destination):
-            filename_with_extension = destination.split('/')[-1]
+            filename_with_extension = self.get_file_from_full_path(destination)
             new_filename = self.rename_file(filename_with_extension)
             destination = os.path.join(
                 '/'.join(destination.split('/')[:-1]),
@@ -52,7 +52,7 @@ class SystemHandler:
         filename, extension = os.path.splitext(file_to_organize)
 
         destination = None
-        for key, values in config.FILES_DESTINATION.items():
+        for key, values in self.files_handler.items():
             if extension.lower() in values:
                 destination = os.path.join(
                     self.folder_to_organize,
