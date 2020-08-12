@@ -1,10 +1,10 @@
+[![Coverage Status](https://coveralls.io/repos/github/jalvaradosegura/folder_organizer/badge.svg?branch=master)](https://coveralls.io/github/jalvaradosegura/folder_organizer?branch=master)
+
 # Folder Organizer 🗂
 Automation to organize the files within a folder, moving them into custom folders. Schedule the execution with crontab to take it to the next level
 
 ## Watch it in action
 ![Example](https://media.giphy.com/media/Z9KPDEo1LetVfOyMru/giphy.gif)
-
->🛠 Still working on this README file
 
 ## Goals
 * Keep a folder cleaner
