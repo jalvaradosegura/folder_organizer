@@ -9,6 +9,7 @@ flake8 = "*"
 [packages]
 pytest = "==6.0.1"
 coverage = "==5.2.1"
+coveralls = "*"
 
 [requires]
 python_version = "3.8"
