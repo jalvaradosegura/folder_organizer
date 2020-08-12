@@ -2,6 +2,7 @@ import os
 
 from organizer.system_handler import SystemHandler
 from organizer.logger import Logger
+from organizer.files_factory import files_factory
 
 FILES_DESTINATION = {
     'images': ['.jpg', '.jpeg', '.png'],
@@ -121,3 +122,10 @@ def test_log_to_file():
     logger.log_to_file('This is a test')
     with open(log_file) as f:
         assert 'This is a test' in f.readline()
+
+
+def test_files_factory():
+    files_factory(FOLDER_TO_ORGANIZE, FILES_DESTINATION)
+    assert 'test.jpg' in os.listdir(FOLDER_TO_ORGANIZE)
+    assert 'test.pdf' in os.listdir(FOLDER_TO_ORGANIZE)
+    assert 'test.random_extension' in os.listdir(FOLDER_TO_ORGANIZE)
