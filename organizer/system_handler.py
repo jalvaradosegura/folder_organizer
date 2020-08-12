@@ -11,6 +11,7 @@ class SystemHandler:
         self.folder_to_organize = folder_to_organize
         self.files_handler = files_handler
         self.logger = Logger()
+        self.logger.file_to_write_in = config.LOG_FILE
 
     def get_files_in_folder_to_organize(self):
         folder = self.folder_to_organize

@@ -1,8 +1,6 @@
 import os
 from datetime import datetime
 
-from docs import config
-
 
 class Logger:
     file_to_write_in = None
@@ -12,7 +10,7 @@ class Logger:
         current_time = datetime.now()
         message = f'{current_time}: {message}'
 
-        file_to_write_in = config.LOG_FILE
+        file_to_write_in = self.get_file_to_write_in()
         if file_to_write_in:
             if not os.path.isfile(file_to_write_in):
                 with open(file_to_write_in, 'w') as f:
@@ -23,3 +21,6 @@ class Logger:
                     lines.insert(0, f'{message}\n')
                     f.seek(0)
                     f.writelines(lines)
+
+    def get_file_to_write_in(self):
+        return self.file_to_write_in
