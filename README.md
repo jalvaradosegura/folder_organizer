@@ -6,8 +6,6 @@ Automation to organize the files within a folder, moving them into custom folder
 ## Watch it in action
 ![Example](https://media.giphy.com/media/Z9KPDEo1LetVfOyMru/giphy.gif)
 
->🛠 Still working on this README file
-
 ## Goals
 * Keep a folder cleaner
 * Save time
