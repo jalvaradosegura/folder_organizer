@@ -75,9 +75,15 @@ def test_rename_file():
 
 def test_move_file():
     file_to_move = os.path.join(FOLDER_TO_ORGANIZE, 'picture.jpg')
-    file_destination = os.path.join(FOLDER_TO_ORGANIZE, 'images', 'picture.jpg')
+    file_destination = os.path.join(
+        FOLDER_TO_ORGANIZE,
+        'images',
+        'picture.jpg'
+    )
     handler.move_file(file_to_move, file_destination)
-    assert os.listdir(os.path.join(FOLDER_TO_ORGANIZE, 'images')) == ['picture.jpg']
+    assert os.listdir(os.path.join(FOLDER_TO_ORGANIZE, 'images')) == [
+        'picture.jpg'
+    ]
 
 
 def test_get_destination_by_extension():

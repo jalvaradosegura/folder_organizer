@@ -10,7 +10,7 @@ run:
 	pipenv run python main.py
 
 test:
-	pipenv run pytest tests.py
+	pipenv run coverage run --source=. -m pytest tests/
 	pipenv run coverage report
 
 help:
