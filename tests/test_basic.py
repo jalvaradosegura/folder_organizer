@@ -86,6 +86,30 @@ def test_move_file():
     ]
 
 
+def test_move_file_that_already_exist_in_destination():
+    older_file = os.path.join(
+        FOLDER_TO_ORGANIZE,
+        'images',
+        'picture.jpg'
+    )
+    with open(older_file, 'w'):
+        pass
+
+    file_to_move = os.path.join(FOLDER_TO_ORGANIZE, 'picture.jpg')
+    file_destination = os.path.join(
+        FOLDER_TO_ORGANIZE,
+        'images',
+        'picture.jpg'
+    )
+    handler.move_file(file_to_move, file_destination)
+
+    # Get the new name by executing the rename function directly
+    new_filename = handler.rename_file('picture.jpg')
+    assert new_filename in os.listdir(
+        str(os.path.join(FOLDER_TO_ORGANIZE, 'images'))
+    )
+
+
 def test_get_destination_by_extension():
     file_to_organize = 'test_file.txt'
     destination = handler.get_destination_by_extension(file_to_organize)
