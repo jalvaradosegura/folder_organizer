@@ -38,7 +38,7 @@ class SystemHandler:
             filename_with_extension = self.get_file_from_full_path(destination)
             new_filename = self.rename_file(filename_with_extension)
             destination = os.path.join(
-                '/'.join(destination.split('/')[:-1]),
+                os.path.dirname(destination),
                 new_filename
             )
         os.rename(file_to_move, destination)
@@ -70,6 +70,10 @@ class SystemHandler:
         return destination
 
     def clean_file_list(self, files_to_clean):
+        """
+        Remove from the file list the files that shouldn't
+        be moved by the system handler
+        """
         log_file = self.get_file_from_full_path(config.LOG_FILE)
         ignore_hidden_files = config.IGNORE_HIDDEN_FILES
 
