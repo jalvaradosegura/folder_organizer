@@ -12,6 +12,8 @@ class SystemHandler:
         self.files_handler = files_handler
         self.logger = Logger()
         self.logger.file_to_write_in = config.LOG_FILE
+        self.folder_for_others = config.FOLDER_FOR_OTHERS
+        self.ignore_hidden_files = config.IGNORE_HIDDEN_FILES
 
     def get_files_in_folder_to_organize(self):
         folder = self.folder_to_organize
@@ -23,7 +25,7 @@ class SystemHandler:
 
     def get_folders_to_create(self):
         files_destination = [key for key, value in self.files_handler.items()]
-        return files_destination + [config.FOLDER_FOR_OTHERS]
+        return files_destination + [self.folder_for_others]
 
     def create_folders(self):
         folders_to_create = self.get_folders_to_create()
@@ -64,7 +66,7 @@ class SystemHandler:
         if destination is None:
             destination = os.path.join(
                 self.folder_to_organize,
-                config.FOLDER_FOR_OTHERS,
+                self.folder_for_others,
                 file_to_organize
             )
         return destination
@@ -74,11 +76,10 @@ class SystemHandler:
         Remove from the file list the files that shouldn't
         be moved by the system handler
         """
-        log_file = self.get_file_from_full_path(config.LOG_FILE)
-        ignore_hidden_files = config.IGNORE_HIDDEN_FILES
+        log_file = self.get_file_from_full_path(self.logger.file_to_write_in)
 
         cleaned_files = [f for f in files_to_clean if f != log_file]
-        if ignore_hidden_files:
+        if self.ignore_hidden_files:
             cleaned_files = [f for f in cleaned_files if not f.startswith('.')]
 
         return cleaned_files

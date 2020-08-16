@@ -15,6 +15,8 @@ handler = SystemHandler(
     files_handler=FILES_DESTINATION
 )
 handler.logger.file_to_write_in = os.path.join(FOLDER_TO_ORGANIZE, 'log.txt')
+handler.folder_for_others = 'others'
+handler.ignore_hidden_files = True
 
 
 def delete_directory(directory):
